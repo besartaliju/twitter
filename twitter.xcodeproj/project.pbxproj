@@ -98,6 +98,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		DFA737A21C8BA14500A77210 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		DFA737A31C8BA14900A77210 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
+		DFA737A41C8BA14D00A77210 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DFE901BE1C8B826400AAB31B /* ViewController.swift */,
+				DFA737A01C8B84F300A77210 /* LoginViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		DFE901B01C8B826400AAB31B = {
 			isa = PBXGroup;
 			children = (
@@ -123,13 +146,14 @@
 		DFE901BB1C8B826400AAB31B /* twitter */ = {
 			isa = PBXGroup;
 			children = (
+				DFA737A41C8BA14D00A77210 /* View Controllers */,
+				DFA737A31C8BA14900A77210 /* API */,
+				DFA737A21C8BA14500A77210 /* Models */,
 				DFE901BC1C8B826400AAB31B /* AppDelegate.swift */,
-				DFE901BE1C8B826400AAB31B /* ViewController.swift */,
 				DFE901C01C8B826500AAB31B /* Main.storyboard */,
 				DFE901C31C8B826500AAB31B /* Assets.xcassets */,
 				DFE901C51C8B826500AAB31B /* LaunchScreen.storyboard */,
 				DFE901C81C8B826500AAB31B /* Info.plist */,
-				DFA737A01C8B84F300A77210 /* LoginViewController.swift */,
 			);
 			path = twitter;
 			sourceTree = "<group>";

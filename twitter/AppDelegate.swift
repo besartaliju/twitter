@@ -45,37 +45,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         print(url.description)
         let requestToken = BDBOAuth1Credential(queryString: url.query)
-        let twitterClient = BDBOAuth1SessionManager(baseURL: NSURL(string: "https://api.twitter.com")!, consumerKey: "PkNbNSWzM08svYyGJHsRxJk3A", consumerSecret: 	"R0NePNFbdYiWIVycdXKJ6OUqDBYK8mrVaoEIiYTSiLPttLtZ0V")
         
-        twitterClient.fetchAccessTokenWithPath("oauth/access_token", method: "POST" , requestToken: requestToken, success: { (accessToken : BDBOAuth1Credential!) -> Void in
+        let client = TwitterClient.sharedInstance
+        
+       client.fetchAccessTokenWithPath("oauth/access_token", method: "POST" , requestToken: requestToken, success: { (accessToken : BDBOAuth1Credential!) -> Void in
             print("I got an access token")
+        
+        client.homeTimeline({ (tweets: [Tweet]) -> () in
+            for tweet in tweets {
+                    print(tweet.text)
+            }
+            }, failure: { (error: NSError) -> () in
+                    print(error.localizedDescription)
+        })
+            client.currentAccount()
             
-            
-            twitterClient.GET("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-                print("account: \(response)")
-                let userDictionary = response as! NSDictionary
-                
-                let user = User(dictionary: userDictionary)
-    
-                print("name: \(user.name)")
-                print("tagline: \(user.tagline)")
-                }, failure:
-                { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-            })
-            
-            twitterClient.GET("1.1/statuses/home_timeline.json", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
-                let dictionaries = response as! [NSDictionary]
-                //remember that there is a for statement here to read all of the tweets and then print them out
-                
-                let tweets = Tweet.tweetsWithArray(dictionaries)
-                
-                for tweet in tweets{
-                print("\(tweet.text)")
-                }
-                }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
-                    
-            })
-            
+        
             }) { (error: NSError!) -> Void in
                 print("error: \(error.localizedDescription)")
         }

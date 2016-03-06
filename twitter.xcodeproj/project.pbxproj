@@ -11,6 +11,7 @@
 		DFA737A11C8B84F300A77210 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA737A01C8B84F300A77210 /* LoginViewController.swift */; };
 		DFA737A61C8BA1B600A77210 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA737A51C8BA1B600A77210 /* User.swift */; };
 		DFA737A81C8BA1C300A77210 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA737A71C8BA1C300A77210 /* Tweet.swift */; };
+		DFA737AA1C8CBF2C00A77210 /* TwitterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFA737A91C8CBF2C00A77210 /* TwitterClient.swift */; };
 		DFE901BD1C8B826400AAB31B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE901BC1C8B826400AAB31B /* AppDelegate.swift */; };
 		DFE901BF1C8B826400AAB31B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFE901BE1C8B826400AAB31B /* ViewController.swift */; };
 		DFE901C21C8B826500AAB31B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFE901C01C8B826500AAB31B /* Main.storyboard */; };
@@ -44,6 +45,7 @@
 		DFA737A01C8B84F300A77210 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		DFA737A51C8BA1B600A77210 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DFA737A71C8BA1C300A77210 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
+		DFA737A91C8CBF2C00A77210 /* TwitterClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterClient.swift; sourceTree = "<group>"; };
 		DFE901B91C8B826400AAB31B /* twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFE901BC1C8B826400AAB31B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DFE901BE1C8B826400AAB31B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 		DFA737A31C8BA14900A77210 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				DFA737A91C8CBF2C00A77210 /* TwitterClient.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				DFA737A81C8BA1C300A77210 /* Tweet.swift in Sources */,
 				DFA737A11C8B84F300A77210 /* LoginViewController.swift in Sources */,
 				DFE901BF1C8B826400AAB31B /* ViewController.swift in Sources */,
+				DFA737AA1C8CBF2C00A77210 /* TwitterClient.swift in Sources */,
 				DFE901BD1C8B826400AAB31B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -22,7 +22,7 @@ class TweetsViewController: UIViewController {
                 //tablereloaddata()
                 print(tweet.text)
             }
-                
+            
             
         }) { (error: NSError) -> () in
                 print("error: \(error.localizedDescription)")
@@ -36,6 +36,11 @@ class TweetsViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func onLogoutButton(sender: AnyObject) {
+        
+        TwitterClient.sharedInstance.logout()
     }
     
 

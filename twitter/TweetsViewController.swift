@@ -13,9 +13,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBOutlet weak var tableView: UITableView!
    
-   
-    
-    
+
     var tweets = [Tweet]()
     
     override func viewDidLoad() {
@@ -30,21 +28,11 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
         
         
-        TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) -> () in
-            self.tweets = tweets
-            self.tableView.reloadData()
-            
-            for tweet in tweets {
-                //tablereloaddata()
-                print(tweet.text)
-            }
-            
-            
-        }) { (error: NSError) -> () in
-                print("error: \(error.localizedDescription)")
+       networkCall()
         
-        
-        }
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
+        tableView.insertSubview(refreshControl, atIndex: 0)
 
         // Do any additional setup after loading the view.
     }
@@ -69,17 +57,23 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     //return 0
     }
     
+    func networkCall() {
+        TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) -> () in
+            self.tweets = tweets
+            self.tableView.reloadData()
+            
+            }, failure: { (error: NSError) -> () in
+                print(error.localizedDescription)
+        })
+        
+    }
+    
+    func refreshControlAction(refreshControl: UIRefreshControl){
+        networkCall()
+        refreshControl.endRefreshing()
+    }
     
     
-    
-
-
-
-
-    
-    
-    
-
 
     @IBAction func onLogoutButton(sender: AnyObject) {
         
@@ -96,5 +90,44 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         // Pass the selected object to the new view controller.
     }
     */
+    
+    //Mark: - Infinite Scroll
+    /*
+    class InfiniteScrollActivityView: UIView {
+        var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+        static let defaultHeight:CGFloat = 60.0
+        
+        required init?(coder aDecoder: NSCoder) {
+            super.init(coder: aDecoder)
+            setupActivityIndicator()
+        }
+        
+        override init(frame aRect: CGRect) {
+            super.init(frame: aRect)
+            setupActivityIndicator()
+        }
+        
+        override func layoutSubviews() {
+            super.layoutSubviews()
+            activityIndicatorView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)
+        }
+        
+        func setupActivityIndicator() {
+            activityIndicatorView.activityIndicatorViewStyle = .Gray
+            activityIndicatorView.hidesWhenStopped = true
+            self.addSubview(activityIndicatorView)
+        }
+        
+        func stopAnimating() {
+            self.activityIndicatorView.stopAnimating()
+            self.hidden = true
+        }
+        
+        func startAnimating() {
+            self.hidden = false
+            self.activityIndicatorView.startAnimating()
+        }
+    }
+*/
 
 }

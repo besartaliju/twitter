@@ -38,24 +38,9 @@ class Tweet: NSObject {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
         timestamp = formatter.dateFromString(dictionary["created_at"] as! String)
-        
-        //screenname = dictionary["user"]!["screen_name"] as! String
-        //name = dictionary["user"]!["name"] as! String
-        
-        
 
     }
     
-    
-    func retweet(){
-        
-        
-    }
-    
-    func favorite(){
-    
-    
-    }
     
     class func tweetsWithArray(dictionaries: [NSDictionary]) -> [Tweet] {
         var tweets = [Tweet]()
@@ -65,5 +50,38 @@ class Tweet: NSObject {
         }
         return tweets
     }
+    
+    func favorite(completion: (tweet: Tweet?, error: NSError?) -> ()) {
+        TwitterClient.sharedInstance.POST(
+            "1.1/favorites/create.json?id=\(id_str)",
+            parameters: nil,
+            progress: nil,
+            success: { (_: NSURLSessionDataTask, _: AnyObject?) -> Void in
+                self.favorited = true
+                self.favoritesCount++
+                completion(tweet: self, error: nil)
+            },
+            failure: { (_: NSURLSessionDataTask?, error: NSError) -> Void in
+                completion(tweet: nil, error: error)
+            }
+        )
+    }
+    
+    func retweet(completion: (tweet: Tweet?, error: NSError?) -> ()) {
+        TwitterClient.sharedInstance.POST(
+            "1.1/statuses/retweet/\(id_str).json",
+            parameters: nil,
+            progress: nil,
+            success: { (_: NSURLSessionDataTask, _: AnyObject?) -> Void in
+                self.retweeted = true
+                self.retweetCount++
+                completion(tweet: self, error: nil)
+            },
+            failure: { (_: NSURLSessionDataTask?, error: NSError) -> Void in
+                completion(tweet: nil, error: error)
+            }
+        )
+    }
+
 
 }

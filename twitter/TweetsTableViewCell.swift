@@ -28,7 +28,7 @@ class TweetsTableViewCell: UITableViewCell {
             profilePic.setImageWithURL(tweet.user!.profileUrl!)
             
             screennameLabel.text = "@\(tweet.user!.screenname!)"
-            timeLabel.text = String(tweet.timestamp)
+            //timeLabel.text = String(tweet.timestamp)
             
             if tweet.retweetCount == 0 {
                 retweetCountLabel.text = ""
@@ -42,11 +42,10 @@ class TweetsTableViewCell: UITableViewCell {
                 favoriteCountLabel.text = String(tweet.favoritesCount)
             }
             
+            tweet.retweeted = false
+            tweet.favorited = false
             
-        
         }
-    
-    
     }
     
     
@@ -66,6 +65,53 @@ class TweetsTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func onRetweet(sender: AnyObject) {
+        if tweet.retweeted == false {
+            retweetButton.setImage(UIImage(named: "retweet-action-on-pressed_green.png"), forState: UIControlState.Highlighted)
+            retweetButton.setImage(UIImage(named: "retweet-action-on-green.png"), forState: UIControlState.Normal)
+        
+            tweet.retweetCount += 1
+            retweetCountLabel.text = "\(tweet.retweetCount)"
+            tweet.retweeted = true
+        } else {
+            retweetButton.setImage(UIImage(named: "retweet-action_default.png"), forState: UIControlState.Normal)
+            tweet.retweetCount -= 1
+            
+            if tweet.retweetCount == 0 {
+                retweetCountLabel.text = ""
+            } else {
+                retweetCountLabel.text = "\(tweet.retweetCount)"
+            }
+            tweet.retweeted = false
+            
+        }
+        
+    }
+    
+    
+    @IBAction func onFavorite(sender: AnyObject) {
+        if tweet.favorited == false {
+            favoriteButton.setImage(UIImage(named: "like-action-on-pressed-red.png"), forState: UIControlState.Highlighted)
+            favoriteButton.setImage(UIImage(named: "like-action-on-red.png"), forState: UIControlState.Normal)
+        
+            tweet.favoritesCount += 1
+            favoriteCountLabel.text = "\(tweet.favoritesCount)"
+            tweet.favorited = true
+        } else {
+            favoriteButton.setImage(UIImage(named: "like-action-off.png"), forState: UIControlState.Normal)
+            
+            tweet.favoritesCount -= 1
+            
+            if tweet.favoritesCount == 0 {
+                favoriteCountLabel.text = ""
+            } else {
+                favoriteCountLabel.text = "\(tweet.favoritesCount)"
+            }
+            
+            tweet.favorited = false
+        }
     }
 
 }

@@ -8,15 +8,31 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController {
+class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    var tweets: [Tweet]!
+    
+    @IBOutlet weak var tableView: UITableView!
+   
+   
+    
+    
+    var tweets = [Tweet]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 120
+        
+        let logo = UIImage(named: "Twitter_logo_blue16")
+        navigationItem.titleView = UIImageView(image: logo)
+        
+        
         
         TwitterClient.sharedInstance.homeTimeline({ (tweets: [Tweet]) -> () in
             self.tweets = tweets
+            self.tableView.reloadData()
             
             for tweet in tweets {
                 //tablereloaddata()
@@ -38,6 +54,33 @@ class TweetsViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return 20
+    
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
+        let cell =  tableView.dequeueReusableCellWithIdentifier("TweetCell", forIndexPath: indexPath) as! TweetsTableViewCell
+        
+        cell.tweet = tweets[indexPath.row] //unexpectedly finding nil value
+        return cell
+    //return 0
+    }
+    
+    
+    
+    
+
+
+
+
+    
+    
+    
+
+
     @IBAction func onLogoutButton(sender: AnyObject) {
         
         TwitterClient.sharedInstance.logout()

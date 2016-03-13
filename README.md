@@ -3,7 +3,7 @@
 
 twitter is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: 10 hours spent in total
+Time spent: 7 hours spent in total
 
 ## User Stories
 
@@ -27,20 +27,20 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1. 
-2. 
+1. Instead of having a fixed date, implementing the time to keep increasing as the tweet gets older.
+2. Adding infinite scroll. 
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/DQ1Wk0I.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/WwwcpGN.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I got stuck for a while on a strange bug because I happened to forget a word. This week has been a little tough on me with workload other than this class. 
 
 ## License
 

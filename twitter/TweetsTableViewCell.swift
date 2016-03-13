@@ -25,9 +25,21 @@ class TweetsTableViewCell: UITableViewCell {
         didSet{
             tweetTextLabel.text = tweet.text
             nameLabel.text = tweet.user!.name! as String
-            screennameLabel.text = "@\(tweet.user!.screenname!)"
-            //timeLabel.text = tweet.timestamp
             
+            screennameLabel.text = "@\(tweet.user!.screenname!)"
+            timeLabel.text = String(tweet.timestamp)
+            
+            if tweet.retweetCount == 0 {
+                retweetCountLabel.text = ""
+            } else {
+                retweetCountLabel.text = String(tweet.retweetCount)
+            }
+            
+            if tweet.favoritesCount == 0 {
+                favoriteCountLabel.text = ""
+            } else {
+                favoriteCountLabel.text = String(tweet.favoritesCount)
+            }
             
             
         
@@ -44,6 +56,8 @@ class TweetsTableViewCell: UITableViewCell {
         
         profilePic.layer.cornerRadius = 5
         profilePic.clipsToBounds = true
+        retweetCountLabel.text = ""
+        favoriteCountLabel.text = ""
         // Initialization code
     }
 

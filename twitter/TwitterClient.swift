@@ -98,6 +98,23 @@ class TwitterClient: BDBOAuth1SessionManager {
 
     }
     
+    func retweet(id_str: String) {
+        POST("1.1/statuses/retweet/\(id_str).json", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("Retweeting a tweet!")
+            }, failure: { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print(error.localizedDescription)
+        })
+    }
+    
+    func favorite(id_str: String) {
+        POST("1.1/favorites/create.json?id=\(id_str)", parameters: nil, progress: nil, success: { (task: NSURLSessionDataTask, response: AnyObject?) -> Void in
+            print("Favoriting a tweet")
+            }) { (task: NSURLSessionDataTask?, error: NSError) -> Void in
+                print(error.localizedDescription)
+        }
+    
+    }
+    
     
     
 

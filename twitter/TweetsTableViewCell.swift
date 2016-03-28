@@ -28,7 +28,7 @@ class TweetsTableViewCell: UITableViewCell {
             profilePic.setImageWithURL(tweet.user!.profileUrl!)
             
             screennameLabel.text = "@\(tweet.user!.screenname!)"
-            //timeLabel.text = String(tweet.timestamp)
+            timeLabel.text = String(tweet.timestamp!)
             
             if tweet.retweetCount == 0 {
                 retweetCountLabel.text = ""

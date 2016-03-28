@@ -12,6 +12,10 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
 
     
     @IBOutlet weak var tableView: UITableView!
+    
+    var isMoreDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
+    var offset: Int = 20
    
 
     var tweets = [Tweet]()
@@ -27,12 +31,21 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         navigationItem.titleView = UIImageView(image: logo)
         
         
-        
-       networkCall()
+        networkCall()
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
         tableView.insertSubview(refreshControl, atIndex: 0)
+        
+        // Set up Infinite Scroll loading indicator
+        let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.hidden = true
+        tableView.addSubview(loadingMoreView!)
+        
+        var insets = tableView.contentInset;
+        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+        tableView.contentInset = insets
 
         // Do any additional setup after loading the view.
     }
@@ -68,6 +81,35 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
+    func loadMoreData(){
+        self.isMoreDataLoading = false
+        self.loadingMoreView!.stopAnimating()
+    
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
+                isMoreDataLoading = true
+                
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                // Code to load more results
+                loadMoreData()		
+            }
+        }
+    }
+    
+    
+    
     func refreshControlAction(refreshControl: UIRefreshControl){
         networkCall()
         refreshControl.endRefreshing()
@@ -81,18 +123,29 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
 
-    /*
+    func switchToProfile(){
+        
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "toDetail" {
+            let cell = sender as! UITableViewCell
+            let indexPath = tableView.indexPathForCell(cell)
+            let tweet = tweets[(indexPath?.row)!]
+            let detailViewController = segue.destinationViewController as! DetailViewController
+            detailViewController.tweet = tweet
+        }
+        
     }
-    */
+    
+    
     
     //Mark: - Infinite Scroll
-    /*
     class InfiniteScrollActivityView: UIView {
         var activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
         static let defaultHeight:CGFloat = 60.0
@@ -128,6 +181,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             self.activityIndicatorView.startAnimating()
         }
     }
-*/
+
 
 }

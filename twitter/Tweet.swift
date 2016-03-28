@@ -11,13 +11,14 @@ import UIKit
 class Tweet: NSObject {
     
     var user: User?
-    var text: String?    //changed from NSString? to String? Change back if anything
+    var text: String?    
     var timestamp: NSDate?
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
     var favorited: Bool
     var retweeted: Bool
     var id_str: String
+    var imageURL: NSURL?
     //var screenname: String
     //var name: String
     
@@ -33,6 +34,11 @@ class Tweet: NSObject {
         
         favorited = dictionary["favorited"] as! Bool
         retweeted = dictionary["retweeted"] as! Bool
+        
+        let imageURLString = dictionary["profile_image_url"] as? String
+        if let imageURLString = imageURLString{
+            imageURL = NSURL(string: imageURLString)
+        }
         
         
         let formatter = NSDateFormatter()
